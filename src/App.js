@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 
 import Header from './components/Layout/Header';
 import Meals from './components/Meals/Meals';
@@ -12,7 +12,7 @@ import useHttp from './components/Custom-hooks/useHttp';
 function App() {
   const [cartIsShown, setCartIsShown] = useState(false);
   const [DUMMY_MEALS, setDUMMY_MEALS] = useState([]);
-
+  
   const showCartHandler = () => {
     setCartIsShown(true);
   };
@@ -21,10 +21,10 @@ function App() {
     setCartIsShown(false);
   };
 
-  const {getData} = useHttp(setDUMMY_MEALS);
+  const {getData, isLoading} = useHttp(setDUMMY_MEALS);
 
   useEffect(() => {
-      getData();
+    getData();
   }, [getData]);
 
   return (
@@ -32,7 +32,7 @@ function App() {
       {cartIsShown && <Cart onClose={hideCartHandler} />}
       <Header onShowCart={showCartHandler} />
       <main>
-        <Meals DUMMY_MEALS={DUMMY_MEALS} />
+        <Meals isLoading={isLoading} DUMMY_MEALS={DUMMY_MEALS} />
       </main>
     </CartProvider>
   );

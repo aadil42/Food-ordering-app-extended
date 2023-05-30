@@ -17,7 +17,8 @@ const AvailableMeals = (props) => {
   return (
     <section className={classes.meals}>
       <Card>
-        <ul>{mealsList}</ul>
+        {props.isLoading && <p> Loading... </p>}
+        {!props.isLoading && <ul>{mealsList}</ul>} 
       </Card>
     </section>
   );
