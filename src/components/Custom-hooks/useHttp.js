@@ -2,11 +2,9 @@ import { useCallback, useState } from "react";
 
 const useHttp = (handleData) => {
 
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
 
     const getData = useCallback(async () => {
-        setIsLoading(true);
-
         // it is just emaulate a delay so We can check loading state
         // setTimeout(async () => {
           
