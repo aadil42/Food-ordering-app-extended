@@ -5,6 +5,10 @@ import Meals from './components/Meals/Meals';
 import Cart from './components/Cart/Cart';
 import CartProvider from './store/CartProvider';
 
+
+// importing custom hook 
+import useHttp from './components/Custom-hooks/useHttp';
+
 function App() {
   const [cartIsShown, setCartIsShown] = useState(false);
   const [DUMMY_MEALS, setDUMMY_MEALS] = useState([]);
@@ -17,23 +21,10 @@ function App() {
     setCartIsShown(false);
   };
 
-  const getData = useCallback(async () => {
-    try {
-      const url = 'https://http-request-2-with-react-default-rtdb.asia-southeast1.firebasedatabase.app/Meals.json';
-      let response = await fetch(url);
-      response = await response.json();
-
-      // converting obj to array
-      response = Object.keys(response).map(key => response[key]);
-
-      setDUMMY_MEALS(response);
-    } catch(error){
-      alert(error.message,'this is from catch block');
-    }
-  }, []);
+  const {getData} = useHttp(setDUMMY_MEALS);
 
   useEffect(() => {
-     getData();
+      getData();
   }, [getData]);
 
   return (
