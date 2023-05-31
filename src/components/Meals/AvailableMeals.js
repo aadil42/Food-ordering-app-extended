@@ -4,9 +4,9 @@ import classes from './AvailableMeals.module.css';
 
 const AvailableMeals = (props) => {
 
-  const mealsList = props.DUMMY_MEALS.map((meal) => (
+  const mealsList = props.DUMMY_MEALS.map((meal, index) => (
     <MealItem
-      key={meal.id}
+      key={index}
       id={meal.id}
       name={meal.name}
       description={meal.description}
