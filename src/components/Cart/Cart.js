@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import React, { useContext, useState } from 'react';
 
 import Modal from '../UI/Modal';
 import CartItem from './CartItem';
@@ -56,19 +56,19 @@ const Cart = (props) => {
 
   return (
     <Modal onClose={props.onClose}>
-      {cartItems}
-      <div className={classes.total}>
-        <span>Total Amount</span>
-        <span>{totalAmount}</span>
-      </div>
-      {isCheckout && <Checkout onConfirm={onConfirm} onClose={props.onClose}/>}
-      <div className={classes.actions}>
-        <button className={classes['button--alt']} onClick={props.onClose}>
-          Close
-        </button>
-        {hasItems && <button onClick={orderHandler} className={classes.button}>Order</button>}
-      </div>
-    </Modal>
+    {cartItems}
+    <div className={classes.total}>
+      <span>Total Amount</span>
+      <span>{totalAmount}</span>
+    </div>
+    {isCheckout && <Checkout onConfirm={onConfirm} onClose={props.onClose}/>}
+    <div className={classes.actions}>
+      <button className={classes['button--alt']} onClick={props.onClose}>
+        Close
+      </button>
+      {hasItems && <button onClick={orderHandler} className={classes.button}>Order</button>}
+    </div>
+  </Modal>
   );
 };
 
