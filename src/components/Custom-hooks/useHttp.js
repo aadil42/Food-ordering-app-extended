@@ -3,6 +3,7 @@ import { useCallback, useState } from "react";
 const useHttp = (handleData) => {
 
     const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState(false);
 
     const getData = useCallback(async () => {
         // it is just emaulate a delay so We can check loading state
@@ -19,11 +20,12 @@ const useHttp = (handleData) => {
           handleData(response);
         } catch(error){
           alert(error.message,'this is from catch block');
+          setError(true);
         }
         setIsLoading(false);
     }, [handleData]);
     
-    return {getData, isLoading};
+    return {getData, isLoading, error};
 }
 
 export default useHttp;

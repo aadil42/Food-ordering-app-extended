@@ -21,7 +21,7 @@ function App() {
     setCartIsShown(false);
   };
 
-  const {getData, isLoading} = useHttp(setDUMMY_MEALS);
+  const {getData, isLoading, error} = useHttp(setDUMMY_MEALS);
 
   useEffect(() => {
     getData();
@@ -32,7 +32,7 @@ function App() {
       {cartIsShown && <Cart onClose={hideCartHandler} />}
       <Header onShowCart={showCartHandler} />
       <main>
-        <Meals isLoading={isLoading} DUMMY_MEALS={DUMMY_MEALS} />
+        <Meals error={error} isLoading={isLoading} DUMMY_MEALS={DUMMY_MEALS} />
       </main>
     </CartProvider>
   );

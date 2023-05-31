@@ -7,7 +7,7 @@ const Meals = (props) => {
   return (
     <Fragment>
       <MealsSummary />
-      <AvailableMeals isLoading={props.isLoading} DUMMY_MEALS={props.DUMMY_MEALS}/>
+      <AvailableMeals error={props.error} isLoading={props.isLoading} DUMMY_MEALS={props.DUMMY_MEALS}/>
     </Fragment>
   );
 };
