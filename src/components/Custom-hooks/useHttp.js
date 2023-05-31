@@ -19,7 +19,7 @@ const useHttp = (handleData) => {
           response = Object.keys(response).map(key => response[key]);
           handleData(response);
         } catch(error){
-          alert(error.message,'this is from catch block');
+          // alert(error.message,'this is from catch block');
           setError(true);
         }
         setIsLoading(false);
