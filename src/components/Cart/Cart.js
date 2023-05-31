@@ -6,6 +6,8 @@ import classes from './Cart.module.css';
 import CartContext from '../../store/cart-context';
 import Checkout from './Checkout';
 
+// custom hooks
+import useHttp from '../Custom-hooks/useHttp';
 
 const Cart = (props) => {
   const cartCtx = useContext(CartContext);
@@ -13,6 +15,8 @@ const Cart = (props) => {
 
   const totalAmount = `$${cartCtx.totalAmount.toFixed(2)}`;
   const hasItems = cartCtx.items.length > 0;
+
+  const {getData: setData, error: postDataError} = useHttp();
 
   const cartItemRemoveHandler = (id) => {
     cartCtx.removeItem(id);
@@ -24,6 +28,15 @@ const Cart = (props) => {
 
   const orderHandler = () => {
     setIsCheckout(true);
+  }
+
+  const onConfirm = (userData) => {
+    setData({
+      url: 'https://http-request-2-with-react-default-rtdb.asia-southeast1.firebasedatabase.app/Orders.json',
+      type: 'POST',
+      userData: userData,
+      items: cartCtx.items
+    });
   }
 
   const cartItems = (
@@ -48,7 +61,7 @@ const Cart = (props) => {
         <span>Total Amount</span>
         <span>{totalAmount}</span>
       </div>
-      {isCheckout && <Checkout onClose={props.onClose}/>}
+      {isCheckout && <Checkout onConfirm={onConfirm} onClose={props.onClose}/>}
       <div className={classes.actions}>
         <button className={classes['button--alt']} onClick={props.onClose}>
           Close

@@ -24,9 +24,11 @@ function App() {
   const {getData, isLoading, error} = useHttp(setDUMMY_MEALS);
 
   useEffect(() => {
-    getData();
+    getData({
+      url: 'https://http-request-2-with-react-default-rtdb.asia-southeast1.firebasedatabase.app/Meals.json',
+      type: 'GET',
+    });
   }, [getData]);
-
   return (
     <CartProvider>
       {cartIsShown && <Cart onClose={hideCartHandler} />}

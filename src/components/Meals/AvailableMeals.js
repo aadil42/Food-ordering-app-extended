@@ -3,7 +3,6 @@ import MealItem from './MealItem/MealItem';
 import classes from './AvailableMeals.module.css';
 
 const AvailableMeals = (props) => {
-
   const mealsList = props.DUMMY_MEALS.map((meal, index) => (
     <MealItem
       key={index}

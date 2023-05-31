@@ -1,7 +1,7 @@
 import {useState,  useRef} from 'react';
 
 // get custom hooks
-import useInput from '../Custom-hooks/useInput';
+// import useInput from '../Custom-hooks/useInput';
 
 import classes from './Checkout.module.css';
 const validateTextInput = (text) => {
@@ -13,28 +13,34 @@ const Checkout = (props) => {
     const [postalError, setPostalError] = useState(false);
     const [cityError, setCityError] = useState(false);
 
-    const [isSubmitTouched, setIsSubmitTouched] = useState(false);
-
     const nameInput = useRef(null);
     const streetInput = useRef(null);
     const postalInput = useRef(null);
     const cityInput = useRef(null);
 
   const confirmHandler = (event) => {
-    console.log('add it to firebase');
     event.preventDefault();
-    setIsSubmitTouched(true); // consider submit button is touched.
-    
-    !validateTextInput(nameInput.current.value) ? setNameError(true) : setNameError(false);
-    !validateTextInput(streetInput.current.value) ? setStreetError(true) : setStreetError(false);
-    !validateTextInput(postalInput.current.value) ? setPostalError(true) : setPostalError(false);
-    !validateTextInput(cityInput.current.value) ? setCityError(true) : setCityError(false);
+
+     const isNameValid = validateTextInput(nameInput.current.value);
+     const isStreetValid = validateTextInput(streetInput.current.value);
+     const isPostalValid = validateTextInput(postalInput.current.value);
+     const isCityValid = validateTextInput(cityInput.current.value);
+
+    !isNameValid ? setNameError(true): setNameError(false);
+    !isStreetValid ? setStreetError(true) : setStreetError(false);
+    !isPostalValid ? setPostalError(true) : setPostalError(false);
+    !isCityValid ? setCityError(true) : setCityError(false);
+
+    const isFormValid = isNameValid && isStreetValid && isPostalValid && isCityValid;
+    // if the form is not valid then just stop and return;
+    if(!isFormValid) return;
+    props.onConfirm({
+        name: nameInput.current.value,
+        street: streetInput.current.value,
+        postal: postalInput.current.value,
+        city: cityInput.current.value
+    });
   };
-
-  let isFormValid = false;
-
-  isFormValid = !nameError && !streetError && !postalError && !cityError;
-  const formError = !isFormValid && isSubmitTouched;
 
   const nameClass = `${classes.control} ${
     !nameError ? '' : classes.invalid
