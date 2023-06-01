@@ -16,7 +16,7 @@ const Cart = (props) => {
   const totalAmount = `$${cartCtx.totalAmount.toFixed(2)}`;
   const hasItems = cartCtx.items.length > 0;
 
-  const {getData: setData, error: postDataError} = useHttp();
+  const {getData: setData, error: postDataError, isSuccessful} = useHttp();
 
   const cartItemRemoveHandler = (id) => {
     cartCtx.removeItem(id);
@@ -38,7 +38,7 @@ const Cart = (props) => {
       items: cartCtx.items
     });
   }
-
+  
   const cartItems = (
     <ul className={classes['cart-items']}>
       {cartCtx.items.map((item) => (
@@ -56,8 +56,9 @@ const Cart = (props) => {
 
   return (
     <Modal onClose={props.onClose}>
-   {!postDataError && cartItems}
-   {postDataError && <p>something went wrong :(</p>}
+   {!isSuccessful && cartItems}
+   {postDataError &&  !isSuccessful && <p>something went wrong :(</p>}
+   {isSuccessful && <p>Order taken!</p>}
   <div className={classes.total}>
     <span>Total Amount</span>
     <span>{totalAmount}</span>

@@ -4,6 +4,7 @@ const useHttp = (handleData) => {
 
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(false);
+    const [isSuccessful, setIsSuccessful] = useState(false);
 
     const getData = useCallback(async (data) => {
         // it is just emaulate a delay so We can check loading state
@@ -32,14 +33,16 @@ const useHttp = (handleData) => {
           response = Object.keys(response).map(key => response[key]);
           console.log(response);
           handleData && handleData(response);
+          setIsSuccessful(true);
         } catch(error){
           alert(error.message,'this is from catch block');
           setError(true);
+          setIsSuccessful(false);
         }
         setIsLoading(false);
     }, [handleData]);
     
-    return {getData, isLoading, error};
+    return {getData, isLoading, error, isSuccessful};
 }
 
 export default useHttp;
